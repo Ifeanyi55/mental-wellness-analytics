@@ -1,0 +1,392 @@
+---
+title: "Research Collaboration Analytics"
+output: 
+  flexdashboard::flex_dashboard:
+    source_code: embed
+    favicon: bar.png
+    theme:
+      bg: "white"
+      fg: "black" 
+      primary: "blue"
+      base_font:
+        google: Autour One
+      code_font:
+        google: JetBrains Mono
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+# Install thematic and un-comment for themed static plots (i.e., ggplot2)
+# thematic::thematic_rmd()
+```
+
+At A Glance {data-icon="fa-bar-chart"}
+=========================================================
+
+Column {data-width=650 .tabset}
+-----------------------------------------------------------------------
+
+### **Research Projects**
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# projects with the most researchers
+projects_with_most_researchers <- mental_wellness_df |> 
+  group_by(Publication) |> 
+  summarize(num_of_researchers = n()) |> 
+  arrange(desc(num_of_researchers))
+
+# top 20 pie
+pie_hc <- projects_with_most_researchers[1:20,] |> 
+  hchart(
+    type = "pie",
+    hcaes(x = Publication,y = num_of_researchers),
+    name = "Number of Researchers",
+    shadow = T) |> 
+  hc_title(text = "<b>Top 20 Projects With The Most Researchers</b>")
+
+pie_hc
+
+```
+
+### **Collaborations**
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# gauge plot of the highest number of researchers
+gauge <- highchart() |> 
+  hc_pane(startAngle = -90,
+          endAngle = 90,
+          background = list(
+            shape = "arc",
+            innerRadius = "60%",
+            outerRadius = "100%",
+            borderWidth = 5
+          )) |> 
+  hc_yAxis(
+    labels = list(style = list(fontSize = "15px",color = "black"))
+  ) |> 
+  hc_colors(colors = "green") |> 
+  hc_add_series(data = 100, 
+                type = "solidgauge",
+                name = "Number of Researchers",
+                dataLabels = list(
+                  useHTML = T,
+                  borderWidth = 0,
+                  borderColor = "black",
+                  style = list(fontSize = "20px",color = "green")
+                )) |> 
+  hc_tooltip(enabled = T) |> 
+  hc_title(text = "<b>Highest Number of Researchers Collaborating on One Research Project</b>")
+
+gauge
+
+```
+
+### **Researchers**
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# top 20 researchers involved in most collaboration
+researcher_most_appearing <- mental_wellness_df |> 
+  group_by(Authors) |> 
+  summarize(Frequency = n()) |> 
+  arrange(desc(Frequency))
+
+researcher_most_appearing |> view()  
+
+hc_bar <- researcher_most_appearing[1:20,] |> 
+  hchart(
+    type = "bar",
+    hcaes(x = Authors,
+          y = Frequency),
+    shadow = T,
+    name =  "Number of Collaborations",
+    color = "#ff3b01"
+  ) |> 
+  hc_title(text = "<b>Top 20 Researchers Involved in Most Collaborations</b>")
+
+hc_bar
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### **Affiliations**
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# affiliations with most researchers
+aff_with_most_researchers <- mental_wellness_df |> 
+  group_by(Affiliation) |> 
+  summarize(num_of_researchers = n()) |> 
+  arrange(desc(num_of_researchers))
+
+# top 20 bar
+hc <- aff_with_most_researchers[1:20,] |> 
+  hchart(type = "bar",
+         hcaes(x = Affiliation, 
+               y = num_of_researchers),
+         name = "Number of Researchers",
+         color = "#0174c3",
+         shadow = T) |> 
+  hc_title(text = "<b>Top 20 Affiliations With The Most Researchers</b>")
+
+hc
+
+```
+
+### **Institutions**
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# institutions with most researchers
+inst_with_most_researchers <- mental_wellness_df |> 
+  group_by(Institution) |> 
+  summarize(num_of_researchers = n()) |> 
+  arrange(desc(num_of_researchers))
+
+
+pie_hc2 <-  inst_with_most_researchers[1:20,] |>
+  hchart(
+    hcaes(x = Institution, y = num_of_researchers),
+    type = "pie",
+    name = "Number of Researchers",
+    shadow = T) |>     
+  hc_title(text = "<b>Top 20 Institution Categories With The Most Researchers</b>")
+
+pie_hc2 
+
+```
+
+Narrative {.storyboard data-icon="fa-book"}
+=========================================================
+
+### The **Top 20 projects** with the most researchers
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# projects with the most researchers
+projects_with_most_researchers <- mental_wellness_df |> 
+  group_by(Publication) |> 
+  summarize(num_of_researchers = n()) |> 
+  arrange(desc(num_of_researchers))
+
+# top 20 pie
+pie_hc <- projects_with_most_researchers[1:20,] |> 
+  hchart(
+    type = "pie",
+    hcaes(x = Publication,y = num_of_researchers),
+    name = "Number of Researchers",
+    shadow = T) |> 
+  hc_title(text = "<b>Top 20 Projects With The Most Researchers</b>")
+
+pie_hc
+
+```
+
+***
+The data used in this project was scraped from [OpenAlex.org](https://openalex.org/) using keyword search. The keywords used to search for projects and the researchers between the 1st of January 2019 and the 30th of September 2023 are ***depression***, ***anxiety***, and ***ptsd***.
+
+The pie chart in the frame shows the top 20 research projects in the data that have the most researcher collaborations. 
+
+These are the researchers who worked together on the research project. 
+
+As you hover over the pie chart, you will see the titles of their research and the number of collaborating researchers in the tooltip. 
+
+Data Source: [OpenAlex.org](https://openalex.org/)
+
+### The **highest number of researchers** collaborating on a research project {data-commentary-width=300}
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# gauge plot of the highest number of researchers
+gauge <- highchart() |> 
+  hc_pane(startAngle = -90,
+          endAngle = 90,
+          background = list(
+            shape = "arc",
+            innerRadius = "60%",
+            outerRadius = "100%",
+            borderWidth = 5
+          )) |> 
+  hc_yAxis(
+    labels = list(style = list(fontSize = "15px",color = "black"))
+  ) |> 
+  hc_colors(colors = "green") |> 
+  hc_add_series(data = 100, 
+                type = "solidgauge",
+                name = "Number of Researchers",
+                dataLabels = list(
+                  useHTML = T,
+                  borderWidth = 0,
+                  borderColor = "black",
+                  style = list(fontSize = "20px",color = "green")
+                )) |> 
+  hc_tooltip(enabled = T) |> 
+  hc_title(text = "<b>Highest Number of Researchers Collaborating on One Research Project</b>")
+
+gauge
+
+```
+
+***
+The gauge plot shows the highest number of researchers who collaborated on one research project.
+
+The title of the research that holds this distinction of having the most collaborating researcher is ***Altered white matter micro-structural organization in post-traumatic stress disorder across 3047 adults: results from the PGC-ENIGMA PTSD consortium***
+
+Data Source: [OpenAlex.org](https://openalex.org/)
+
+### The **Top 20 researchers** involved in most collaborations {data-commentary-width=300}
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# top 20 researchers involved in most collaboration
+researcher_most_appearing <- mental_wellness_df |> 
+  group_by(Authors) |> 
+  summarize(Frequency = n()) |> 
+  arrange(desc(Frequency))
+
+researcher_most_appearing |> view()  
+
+hc_bar <- researcher_most_appearing[1:20,] |> 
+  hchart(
+    type = "bar",
+    hcaes(x = Authors,
+          y = Frequency),
+    shadow = T,
+    name =  "Number of Collaborations",
+    color = "#ff3b01"
+  ) |> 
+  hc_title(text = "<b>Top 20 Researchers Involved in Most Collaborations</b>")
+
+hc_bar
+
+```
+
+***
+The bar plot shows the top 20 individual researchers who have been involved in the most research collaborations.
+
+This implies that they have participated in more than one research effort in the data.
+
+The researcher who holds the distinction for the most collaborations is ***Pin Cuijpers***.
+
+Hover over the plot to see the collaborations count of the other researchers.
+
+Data Source: [OpenAlex.org](https://openalex.org/)
+
+### The **Top 20 affiliations** with the most researchers {data-commentary-width=300}
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# affiliations with most researchers
+aff_with_most_researchers <- mental_wellness_df |> 
+  group_by(Affiliation) |> 
+  summarize(num_of_researchers = n()) |> 
+  arrange(desc(num_of_researchers))
+
+# top 20 bar
+hc <- aff_with_most_researchers[1:20,] |> 
+  hchart(type = "bar",
+         hcaes(x = Affiliation, 
+               y = num_of_researchers),
+         name = "Number of Researchers",
+         color = "#0174c3",
+         shadow = T) |> 
+  hc_title(text = "<b>Top 20 Affiliations With The Most Researchers</b>")
+
+hc
+
+```
+
+***
+The bar plot shows the top 20 research affiliations having the most researchers who collaborated on the research projects in the data.
+
+The leading affiliate organization is ***King's College London***.
+
+Data Source: [OpenAlex.org](https://openalex.org/)
+
+### The **Institution categories** having the most researchers {data-commentary-width=300}
+
+```{r}
+library(tidyverse)
+library(highcharter)
+
+# read csv file
+mental_wellness_df <- read.csv("mental_wellness.csv")
+
+# institutions with most researchers
+inst_with_most_researchers <- mental_wellness_df |> 
+  group_by(Institution) |> 
+  summarize(num_of_researchers = n()) |> 
+  arrange(desc(num_of_researchers))
+
+
+pie_hc2 <-  inst_with_most_researchers |>
+  hchart(
+    hcaes(x = Institution, y = num_of_researchers),
+    type = "pie",
+    name = "Number of Researchers",
+    shadow = T) |>     
+  hc_title(text = "<b>Institution Categories With The Most Researchers</b>")
+
+pie_hc2 
+
+
+```
+
+***
+The pie chart shows institution categories having the most collaborating researchers.
+
+The top institution category is ***education***.
+
+Data Source: [OpenAlex.org](https://openalex.org/)
+
+
