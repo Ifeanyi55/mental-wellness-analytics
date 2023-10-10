@@ -2,7 +2,7 @@
 title: "Research Collaboration Analytics"
 output: 
   flexdashboard::flex_dashboard:
-    source_code: embed
+    source_code: "https://github.com/Ifeanyi55/mental-wellness-analytics/tree/main"
     favicon: bar.png
     theme:
       bg: "white"
@@ -50,7 +50,7 @@ pie_hc <- projects_with_most_researchers[1:20,] |>
     hcaes(x = Publication,y = num_of_researchers),
     name = "Number of Researchers",
     shadow = T) |> 
-  hc_title(text = "<b>Top 20 Projects With The Most Researchers</b>")
+  hc_title(text = "<b>Top 20 Mental Wellness Projects With The Most Researchers</b>")
 
 pie_hc
 
@@ -89,7 +89,7 @@ gauge <- highchart() |>
                   style = list(fontSize = "20px",color = "green")
                 )) |> 
   hc_tooltip(enabled = T) |> 
-  hc_title(text = "<b>Highest Number of Researchers Collaborating on One Research Project</b>")
+  hc_title(text = "<b>Highest Number of Researchers Collaborating on Mental Wellness Research Project</b>")
 
 gauge
 
@@ -120,7 +120,7 @@ hc_bar <- researcher_most_appearing[1:20,] |>
     name =  "Number of Collaborations",
     color = "#ff3b01"
   ) |> 
-  hc_title(text = "<b>Top 20 Researchers Involved in Most Collaborations</b>")
+  hc_title(text = "<b>Top 20 Researchers Involved in Most Mental Wellness Research Collaborations</b>")
 
 hc_bar
 
@@ -152,7 +152,7 @@ hc <- aff_with_most_researchers[1:20,] |>
          name = "Number of Researchers",
          color = "#0174c3",
          shadow = T) |> 
-  hc_title(text = "<b>Top 20 Affiliations With The Most Researchers</b>")
+  hc_title(text = "<b>Top 20 Affiliations With The Most Mental Wellness Researchers</b>")
 
 hc
 
@@ -180,7 +180,7 @@ pie_hc2 <-  inst_with_most_researchers[1:20,] |>
     type = "pie",
     name = "Number of Researchers",
     shadow = T) |>     
-  hc_title(text = "<b>Top 20 Institution Categories With The Most Researchers</b>")
+  hc_title(text = "<b>Institution Categories With The Most Mental Wellness Researchers</b>")
 
 pie_hc2 
 
@@ -188,8 +188,13 @@ pie_hc2
 
 Narrative {.storyboard data-icon="fa-book"}
 =========================================================
+### **Project introduction**
+In the relentless battle against mental health issues, the research community emerges as a beacon of hope, demonstrating the power of collaboration. Researchers from diverse backgrounds unite to understand and address the complexities of mental health, creating groundbreaking therapies and fostering a more compassionate approach to care. Beyond science, they work hand in hand with clinicians, caregivers, and advocates, building a network of support that reminds individuals they are not alone. Together, they illuminate a path toward hope, resilience, and a brighter future, showcasing the enduring power of human compassion in the face of an invisible adversary.
 
-### The **Top 20 projects** with the most researchers
+This data visualisation project aims to shed light on the collaborative efforts of researchers to find practical solutions to mental health and mental wellness issues. "Community", in the context of this project, implies a collective effort to achieve a common goal, which is to help sufferers of mental health conditions win the fight. 
+This is why there are so many researchers who have collaborated on different aspects of mental wellness research as shown in the data visualisation in order to tackle this long-standing menace to happiness and a healthy state of mind.
+
+### The **Top 20 mental wellness projects** with the most researchers
 
 ```{r}
 library(tidyverse)
@@ -211,7 +216,7 @@ pie_hc <- projects_with_most_researchers[1:20,] |>
     hcaes(x = Publication,y = num_of_researchers),
     name = "Number of Researchers",
     shadow = T) |> 
-  hc_title(text = "<b>Top 20 Projects With The Most Researchers</b>")
+  hc_title(text = "<b>Top 20 Mental Wellness Projects With The Most Researchers</b>")
 
 pie_hc
 
@@ -261,14 +266,14 @@ gauge <- highchart() |>
                   style = list(fontSize = "20px",color = "green")
                 )) |> 
   hc_tooltip(enabled = T) |> 
-  hc_title(text = "<b>Highest Number of Researchers Collaborating on One Research Project</b>")
+  hc_title(text = "<b>Highest Number of Researchers Collaborating on A Mental Wellness Research Project</b>")
 
 gauge
 
 ```
 
 ***
-The gauge plot shows the highest number of researchers who collaborated on one research project.
+The gauge plot shows the highest number of researchers who collaborated on one mental wellness research project.
 
 The title of the research that holds this distinction of having the most collaborating researcher is ***Altered white matter micro-structural organization in post-traumatic stress disorder across 3047 adults: results from the PGC-ENIGMA PTSD consortium***
 
@@ -300,14 +305,14 @@ hc_bar <- researcher_most_appearing[1:20,] |>
     name =  "Number of Collaborations",
     color = "#ff3b01"
   ) |> 
-  hc_title(text = "<b>Top 20 Researchers Involved in Most Collaborations</b>")
+  hc_title(text = "<b>Top 20 Researchers Involved in Most Mental Wellness Research Collaborations</b>")
 
 hc_bar
 
 ```
 
 ***
-The bar plot shows the top 20 individual researchers who have been involved in the most research collaborations.
+The bar plot shows the top 20 individual researchers who have been involved in the most mental wellness research collaborations.
 
 This implies that they have participated in more than one research effort in the data.
 
@@ -317,7 +322,7 @@ Hover over the plot to see the collaborations count of the other researchers.
 
 Data Source: [OpenAlex.org](https://openalex.org/)
 
-### The **Top 20 affiliations** with the most researchers {data-commentary-width=300}
+### The **Top 20 affiliations** with the most mental wellness researchers {data-commentary-width=300}
 
 ```{r}
 library(tidyverse)
@@ -340,20 +345,20 @@ hc <- aff_with_most_researchers[1:20,] |>
          name = "Number of Researchers",
          color = "#0174c3",
          shadow = T) |> 
-  hc_title(text = "<b>Top 20 Affiliations With The Most Researchers</b>")
+  hc_title(text = "<b>Top 20 Affiliations With The Most Mental Wellness Researchers</b>")
 
 hc
 
 ```
 
 ***
-The bar plot shows the top 20 research affiliations having the most researchers who collaborated on the research projects in the data.
+The bar plot shows the top 20 research affiliations having the most researchers who collaborated on the mental wellness research projects in the data.
 
 The leading affiliate organization is ***King's College London***.
 
 Data Source: [OpenAlex.org](https://openalex.org/)
 
-### The **Institution categories** having the most researchers {data-commentary-width=300}
+### The **Institution categories** having the most mental wellness researchers {data-commentary-width=300}
 
 ```{r}
 library(tidyverse)
@@ -375,7 +380,7 @@ pie_hc2 <-  inst_with_most_researchers |>
     type = "pie",
     name = "Number of Researchers",
     shadow = T) |>     
-  hc_title(text = "<b>Institution Categories With The Most Researchers</b>")
+  hc_title(text = "<b>Institution Categories With The Most Mental Wellness Researchers</b>")
 
 pie_hc2 
 
